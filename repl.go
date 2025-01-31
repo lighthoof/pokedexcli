@@ -16,16 +16,6 @@ type cliCommand struct {
 }
 
 func startRepl() {
-	//creating a registry of supported commands
-	supportedCommands :=
-		map[string]cliCommand{
-			"exit": {
-				name:        "exit",
-				description: "Exit the Pokedex",
-				callback:    commandExit,
-			},
-		}
-
 	//create an input scanner
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -40,15 +30,18 @@ func startRepl() {
 
 		//clear the input
 		commandInput := cleanInput(scanner.Text())[0]
-		//handle the command
-		for _, command := range supportedCommands {
-			if commandInput == command.name {
-				command.callback()
-			} else {
-				fmt.Println("Unknown command")
-			}
-		}
 
+		//handle the command
+		supportedCommands := getSupportedCommands()
+		command, ok := supportedCommands[commandInput]
+		if ok {
+			err := command.callback()
+			if err != nil {
+				fmt.Printf("Error executing a command: %v\n", err)
+			}
+		} else {
+			fmt.Println("Unknown command")
+		}
 	}
 }
 
@@ -57,6 +50,39 @@ func commandExit() error {
 	time.Sleep(1 * time.Second)
 	os.Exit(0)
 	return nil
+}
+
+func commandHelp() error {
+	fmt.Println("Welcome to the Pokedex!")
+	fmt.Println("Usage: ")
+	fmt.Println()
+
+	//looping over available commands for help output
+	for _, command := range getSupportedCommands() {
+		name := command.name
+		desc := command.description
+		fmt.Println(name + ": " + desc)
+	}
+
+	return nil
+}
+
+func getSupportedCommands() map[string]cliCommand {
+	//creating a registry of supported commands
+	supportedCommands :=
+		map[string]cliCommand{
+			"exit": {
+				name:        "exit",
+				description: "Exit the Pokedex",
+				callback:    commandExit,
+			},
+			"help": {
+				name:        "help",
+				description: "Displays a help message",
+				callback:    commandHelp,
+			},
+		}
+	return supportedCommands
 }
 
 func cleanInput(text string) []string {
