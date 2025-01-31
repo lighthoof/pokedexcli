@@ -5,15 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"time"
 )
-
-// a struct to contain supported commands
-type cliCommand struct {
-	name        string
-	description string
-	callback    func() error
-}
 
 func startRepl() {
 	//create an input scanner
@@ -45,26 +37,16 @@ func startRepl() {
 	}
 }
 
-func commandExit() error {
-	fmt.Println("Closing the Pokedex... Goodbye!")
-	time.Sleep(1 * time.Second)
-	os.Exit(0)
-	return nil
+// a struct to contain supported commands
+type cliCommand struct {
+	name        string
+	description string
+	callback    func() error
 }
 
-func commandHelp() error {
-	fmt.Println("Welcome to the Pokedex!")
-	fmt.Println("Usage: ")
-	fmt.Println()
-
-	//looping over available commands for help output
-	for _, command := range getSupportedCommands() {
-		name := command.name
-		desc := command.description
-		fmt.Println(name + ": " + desc)
-	}
-
-	return nil
+func cleanInput(text string) []string {
+	resultString := strings.Fields(strings.ToLower(text))
+	return resultString
 }
 
 func getSupportedCommands() map[string]cliCommand {
@@ -83,9 +65,4 @@ func getSupportedCommands() map[string]cliCommand {
 			},
 		}
 	return supportedCommands
-}
-
-func cleanInput(text string) []string {
-	resultString := strings.Fields(strings.ToLower(text))
-	return resultString
 }
