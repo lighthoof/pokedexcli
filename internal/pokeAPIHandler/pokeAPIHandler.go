@@ -7,37 +7,37 @@ import (
 )
 
 type Location struct {
-	name string
-	url  string
+	Name string
+	Url  string
 }
 
-type response struct {
-	count    int
-	next     string
-	previous string
-	results  []Location
+type Response struct {
+	Count    int
+	Next     string
+	Previous string
+	Results  []Location
 }
 
-func GetPokeAPILocation(url string) ([]Location, error) {
+func GetPokeAPILocation(url string) (Response, error) {
 	//Send GET request to get location data from provided URL
 	res, err := http.Get(url)
 	if err != nil {
-		return []Location{}, err
+		return Response{}, err
 	}
 	defer res.Body.Close()
 
 	//Read body into a json data string
 	jsonData, err := io.ReadAll(res.Body)
 	if err != nil {
-		return []Location{}, err
+		return Response{}, err
 	}
 
 	//Decode json data into a struct with results
-	var decodedRes response
+	var decodedRes Response
 	err = json.Unmarshal(jsonData, &decodedRes)
 	if err != nil {
-		return []Location{}, err
+		return Response{}, err
 	}
 
-	return decodedRes.results, nil
+	return decodedRes, nil
 }

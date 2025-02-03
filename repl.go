@@ -10,6 +10,10 @@ import (
 func startRepl() {
 	//create an input scanner
 	scanner := bufio.NewScanner(os.Stdin)
+	conf := config{
+		next:     "https://pokeapi.co/api/v2/location-area/",
+		previous: "",
+	}
 
 	//start input loop
 	for {
@@ -27,7 +31,7 @@ func startRepl() {
 		supportedCommands := getSupportedCommands()
 		command, ok := supportedCommands[commandInput]
 		if ok {
-			err := command.callback()
+			err := command.callback(&conf)
 			if err != nil {
 				fmt.Printf("Error executing a command: %v\n", err)
 			}
@@ -41,7 +45,12 @@ func startRepl() {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
+}
+
+type config struct {
+	next     string
+	previous string
 }
 
 func cleanInput(text string) []string {
@@ -62,6 +71,11 @@ func getSupportedCommands() map[string]cliCommand {
 				name:        "help",
 				description: "Displays a help message",
 				callback:    commandHelp,
+			},
+			"map": {
+				name:        "map",
+				description: "Display a list of map locations",
+				callback:    commandMap,
 			},
 		}
 	return supportedCommands
