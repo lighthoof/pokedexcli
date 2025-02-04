@@ -74,8 +74,13 @@ func getSupportedCommands() map[string]cliCommand {
 			},
 			"map": {
 				name:        "map",
-				description: "Display a list of map locations",
+				description: "Display next page of map locations",
 				callback:    commandMap,
+			},
+			"mapb": {
+				name:        "mapb",
+				description: "Display previous page of map locations",
+				callback:    commandMapb,
 			},
 		}
 	return supportedCommands
