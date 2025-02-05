@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func startRepl() {
+func startRepl(url string) {
 	//create an input scanner
 	scanner := bufio.NewScanner(os.Stdin)
 	conf := config{

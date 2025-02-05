@@ -6,18 +6,6 @@ import (
 	"net/http"
 )
 
-type Location struct {
-	Name string
-	Url  string
-}
-
-type Response struct {
-	Count    int
-	Next     string
-	Previous string
-	Results  []Location
-}
-
 func GetPokeAPILocation(url string) (Response, error) {
 	//Send GET request to get location data from provided URL
 	res, err := http.Get(url)
