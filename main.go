@@ -22,21 +22,21 @@ func main() {
 	//Open the config file
 	xmlConfigFile, err := os.Open("url_config.xml")
 	if err != nil {
-		fmt.Printf("Can't open config : %w\n", err)
+		fmt.Printf("Can't open config : %v\n", err)
 	}
 	defer xmlConfigFile.Close()
 
 	//Reading the config file
 	byteConfig, err := io.ReadAll(xmlConfigFile)
 	if err != nil {
-		fmt.Printf("Can't read config : %w\n", err)
+		fmt.Printf("Can't read config : %v\n", err)
 	}
 
 	//Decode the config into a struct
 	var cnfLinks Links
 	err = xml.Unmarshal(byteConfig, &cnfLinks)
 	if err != nil {
-		fmt.Printf("Can't decode config : %w\n", err)
+		fmt.Printf("Can't decode config : %v\n", err)
 	}
 
 	startUrl := cnfLinks.ConfLinks[0].URL + cnfLinks.ConfLinks[1].URL

@@ -11,7 +11,7 @@ func startRepl(url string) {
 	//create an input scanner
 	scanner := bufio.NewScanner(os.Stdin)
 	conf := config{
-		next:     "https://pokeapi.co/api/v2/location-area/",
+		next:     url,
 		previous: "",
 	}
 
