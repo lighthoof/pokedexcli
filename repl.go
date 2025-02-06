@@ -72,10 +72,10 @@ func getSupportedCommands() map[string]cliCommand {
 				description: "Displays a help message",
 				callback:    commandHelp,
 			},
-			"map": {
-				name:        "map",
+			"mapf": {
+				name:        "mapf",
 				description: "Display next page of map locations",
-				callback:    commandMap,
+				callback:    commandMapf,
 			},
 			"mapb": {
 				name:        "mapb",
