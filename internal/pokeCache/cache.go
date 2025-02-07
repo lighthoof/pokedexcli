@@ -16,7 +16,11 @@ type Cache struct {
 }
 
 func NewCache(interval time.Duration) *Cache {
+	//create and initialize new cache
 	var newCache Cache
+	newCache.entry = make(map[string]CacheEntry)
+
+	//run cache cleanup loop
 	go newCache.reapLoop(interval)
 	return &newCache
 }
