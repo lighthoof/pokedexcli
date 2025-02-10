@@ -52,9 +52,9 @@ func (c *Cache) Get(key string) ([]byte, bool) {
 func (c *Cache) reapLoop(interval time.Duration) {
 
 	ticker := time.NewTicker(interval)
-	for t := range ticker.C {
+	for range ticker.C {
 		for k, cEntry := range c.entry {
-			cacheCutover := t.Add(-interval)
+			cacheCutover := time.Now().Add(-interval)
 			if cacheCutover.After(cEntry.createdAt) {
 				c.mu.Lock()
 				delete(c.entry, k)

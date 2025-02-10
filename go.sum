@@ -1,2 +1,4 @@
 github.com/lighthoof/pokedexcli/internal/pokeAPIHandler v0.0.0-20250202132351-d65dde3b2174 h1:X+D/3mIlW9BEMACI+ZoPFrg13ngelrryNtvLt4GObdQ=
 github.com/lighthoof/pokedexcli/internal/pokeAPIHandler v0.0.0-20250202132351-d65dde3b2174/go.mod h1:HrAw7+30nbA7oPi/BlpDP1XG7slloO/lVv52cfSqp3o=
+github.com/lighthoof/pokedexcli/internal/pokeCache v0.0.0-20250207155014-cc44e9451521 h1:CW2kVQfnPBUx76KX7oFL9IECgoJuOZ/VvNgbA5THI08=
+github.com/lighthoof/pokedexcli/internal/pokeCache v0.0.0-20250207155014-cc44e9451521/go.mod h1:x6xhhvipmnhpzAJSLP/ouyyDqre2rNTQC1Zu+r2UFik=

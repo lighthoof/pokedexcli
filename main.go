@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
+
+	"github.com/lighthoof/pokedexcli/internal/pokeCache"
 )
 
 type Link struct {
@@ -17,6 +20,8 @@ type Links struct {
 	XMLName   xml.Name `xml:"links"`
 	ConfLinks []Link   `xml:"link"`
 }
+
+var GlobalCache *pokeCache.Cache
 
 func main() {
 	//Open the config file
@@ -40,5 +45,6 @@ func main() {
 	}
 
 	startUrl := cnfLinks.ConfLinks[0].URL + cnfLinks.ConfLinks[1].URL
+	GlobalCache = pokeCache.NewCache(5 * time.Second)
 	startRepl(startUrl)
 }

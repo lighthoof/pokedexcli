@@ -5,9 +5,6 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"time"
-
-	"github.com/lighthoof/pokedexcli/internal/pokeCache"
 )
 
 func startRepl(url string) {
@@ -18,7 +15,6 @@ func startRepl(url string) {
 		previous: "",
 	}
 
-	mapCache := pokeCache.NewCache(5 * time.Second)
 	//start input loop
 	for {
 		fmt.Print("Pokedex > ")
@@ -35,7 +31,7 @@ func startRepl(url string) {
 		supportedCommands := getSupportedCommands()
 		command, ok := supportedCommands[commandInput]
 		if ok {
-			err := command.callback(&conf, mapCache)
+			err := command.callback(&conf)
 			if err != nil {
 				fmt.Printf("Error executing a command: %v\n", err)
 			}
@@ -49,7 +45,7 @@ func startRepl(url string) {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config, *pokeCache.Cache) error
+	callback    func(*config) error
 }
 
 type config struct {
