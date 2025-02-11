@@ -82,6 +82,11 @@ func getSupportedCommands() map[string]cliCommand {
 				description: "Display previous page of map locations",
 				callback:    commandMapb,
 			},
+			"clear": {
+				name:        "clear",
+				description: "Clear the location cache",
+				callback:    commandClear,
+			},
 		}
 	return supportedCommands
 }

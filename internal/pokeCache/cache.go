@@ -63,3 +63,9 @@ func (c *Cache) reapLoop(interval time.Duration) {
 		}
 	}
 }
+
+func (c *Cache) Clear() {
+	c.mu.Lock()
+	c.entry = make(map[string]CacheEntry)
+	c.mu.Unlock()
+}
