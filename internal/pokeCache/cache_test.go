@@ -51,6 +51,7 @@ func TestReapLoop(t *testing.T) {
 	_, ok := cache.Get("https://somethingsomething.example.com")
 	if !ok {
 		t.Errorf("expected to find value")
+		return
 	}
 
 	time.Sleep(waitTime)
@@ -58,5 +59,25 @@ func TestReapLoop(t *testing.T) {
 	_, ok = cache.Get("https://somethingsomething.example.com")
 	if ok {
 		t.Errorf("expected not to find value")
+		return
+	}
+}
+
+func TestClear(t *testing.T) {
+	cache := NewCache(50 * time.Second)
+	cache.Add("https://somethingsomething.example.com", []byte("someTestData"))
+
+	_, ok := cache.Get("https://somethingsomething.example.com")
+	if !ok {
+		t.Errorf("expected to find value")
+		return
+	}
+
+	cache.Clear()
+
+	_, ok = cache.Get("https://somethingsomething.example.com")
+	if ok {
+		t.Errorf("expected not to find value")
+		return
 	}
 }

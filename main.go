@@ -21,6 +21,13 @@ type Links struct {
 	ConfLinks []Link   `xml:"link"`
 }
 
+type config struct {
+	base      string
+	locations string
+	next      string
+	previous  string
+}
+
 var GlobalCache *pokeCache.Cache
 
 func main() {
@@ -44,7 +51,14 @@ func main() {
 		fmt.Printf("Can't decode config : %v\n", err)
 	}
 
-	startUrl := cnfLinks.ConfLinks[0].URL + cnfLinks.ConfLinks[1].URL
+	conf := config{
+		base:      cnfLinks.ConfLinks[0].URL,
+		locations: cnfLinks.ConfLinks[1].URL,
+		next:      "",
+		previous:  "",
+	}
+
+	//startUrl := cnfLinks.ConfLinks[0].URL + cnfLinks.ConfLinks[1].URL
 	GlobalCache = pokeCache.NewCache(5 * time.Second)
-	startRepl(startUrl)
+	startRepl(conf)
 }

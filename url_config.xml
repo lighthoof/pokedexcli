@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <links>
     <link type="base">
-        <URL>https://pokeapi.co/api/v2/</URL>
+        <URL>https://pokeapi.co/api/v2</URL>
     </link>
     <link type="locationAreas">
-        <URL>location-area</URL>
+        <URL>/location-area</URL>
     </link>
 </links>

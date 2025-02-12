@@ -7,13 +7,10 @@ import (
 	"strings"
 )
 
-func startRepl(url string) {
+func startRepl(conf config) {
 	//create an input scanner
 	scanner := bufio.NewScanner(os.Stdin)
-	conf := config{
-		next:     url,
-		previous: "",
-	}
+	conf.next = conf.base + conf.locations
 
 	//start input loop
 	for {
@@ -25,13 +22,20 @@ func startRepl(url string) {
 		}
 
 		//clear the input
-		commandInput := cleanInput(scanner.Text())[0]
+		inputString := cleanInput(scanner.Text())
+		inputParameter := ""
+		if len(inputString) > 1 {
+			inputParameter = inputString[1]
+		}
+		commandInput := inputString[0]
+
+		fmt.Println(inputParameter)
 
 		//handle the command
 		supportedCommands := getSupportedCommands()
 		command, ok := supportedCommands[commandInput]
 		if ok {
-			err := command.callback(&conf)
+			err := command.callback(&conf, inputParameter)
 			if err != nil {
 				fmt.Printf("Error executing a command: %v\n", err)
 			}
@@ -45,12 +49,7 @@ func startRepl(url string) {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
-}
-
-type config struct {
-	next     string
-	previous string
+	callback    func(*config, string) error
 }
 
 func cleanInput(text string) []string {
@@ -86,6 +85,11 @@ func getSupportedCommands() map[string]cliCommand {
 				name:        "clear",
 				description: "Clear the location cache",
 				callback:    commandClear,
+			},
+			"explore": {
+				name:        "explore",
+				description: "Explore the location",
+				callback:    commandExplore,
 			},
 		}
 	return supportedCommands
