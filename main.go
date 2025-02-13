@@ -24,6 +24,7 @@ type Links struct {
 type config struct {
 	base      string
 	locations string
+	pokemon   string
 	next      string
 	previous  string
 }
@@ -54,6 +55,7 @@ func main() {
 	conf := config{
 		base:      cnfLinks.ConfLinks[0].URL,
 		locations: cnfLinks.ConfLinks[1].URL,
+		pokemon:   cnfLinks.ConfLinks[2].URL,
 		next:      "",
 		previous:  "",
 	}

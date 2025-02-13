@@ -6,4 +6,7 @@
     <link type="locationAreas">
         <URL>/location-area</URL>
     </link>
+    <link type="pokemon">
+        <URL>/pokemon</URL>
+    </link>
 </links>

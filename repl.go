@@ -29,8 +29,6 @@ func startRepl(conf config) {
 		}
 		commandInput := inputString[0]
 
-		fmt.Println(inputParameter)
-
 		//handle the command
 		supportedCommands := getSupportedCommands()
 		command, ok := supportedCommands[commandInput]
@@ -90,6 +88,10 @@ func getSupportedCommands() map[string]cliCommand {
 				name:        "explore",
 				description: "Explore the location",
 				callback:    commandExplore,
+			}, "catch": {
+				name:        "explore",
+				description: "Try to catch a pokemon",
+				callback:    commandCatch,
 			},
 		}
 	return supportedCommands
