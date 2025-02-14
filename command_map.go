@@ -31,7 +31,6 @@ func commandMapb(conf *config, input string) error {
 
 	res, err := pokeAPIHandler.GetPokeAPILocation(conf.previous, GlobalCache)
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
 

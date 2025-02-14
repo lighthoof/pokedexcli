@@ -28,10 +28,10 @@ type config struct {
 	pokemon   string
 	next      string
 	previous  string
+	PokeDex   map[string]pokeAPIHandler.Pokemon
 }
 
 var GlobalCache *pokeCache.Cache
-var PokeDex map[string]pokeAPIHandler.Pokemon
 
 func main() {
 	//Open the config file
@@ -60,11 +60,11 @@ func main() {
 		pokemon:   cnfLinks.ConfLinks[2].URL,
 		next:      "",
 		previous:  "",
+		PokeDex:   map[string]pokeAPIHandler.Pokemon{},
 	}
 
 	//create the cache
 	GlobalCache = pokeCache.NewCache(5 * time.Second)
 	//initialize PokeDex
-	PokeDex = make(map[string]pokeAPIHandler.Pokemon)
 	startRepl(conf)
 }

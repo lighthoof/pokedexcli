@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"math/rand"
 	"time"
@@ -9,21 +10,24 @@ import (
 )
 
 func commandCatch(conf *config, input string) error {
+	if len(input) != 1 {
+		return errors.New("you must provide a pokemon name")
+	}
+
 	catchURL := conf.base + conf.pokemon + "/" + input + "/"
 	pokemon, err := pokeAPIHandler.GetPokeAPIPokemon(catchURL, GlobalCache)
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
 
 	//Emulating time spent on catching a pokemon
-	fmt.Printf("Throwing a Pokeball at %v ...\n", pokemon.Name)
+	fmt.Printf("Throwing a Pokeball at %v...\n", pokemon.Name)
 	time.Sleep(2 * time.Second)
 
 	//Deciding if a pokemon is caught
 	if rand.Intn(200) > pokemon.BaseExperience {
 		fmt.Printf("%v was caught!\n", pokemon.Name)
-		PokeDex[pokemon.Name] = pokemon
+		conf.PokeDex[pokemon.Name] = pokemon
 	} else {
 		fmt.Printf("%v escaped!\n", pokemon.Name)
 	}
