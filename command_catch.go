@@ -23,6 +23,7 @@ func commandCatch(conf *config, input string) error {
 	//Deciding if a pokemon is caught
 	if rand.Intn(200) > pokemon.BaseExperience {
 		fmt.Printf("%v was caught!\n", pokemon.Name)
+		PokeDex[pokemon.Name] = pokemon
 	} else {
 		fmt.Printf("%v escaped!\n", pokemon.Name)
 	}

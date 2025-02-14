@@ -7,6 +7,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/lighthoof/pokedexcli/internal/pokeAPIHandler"
 	"github.com/lighthoof/pokedexcli/internal/pokeCache"
 )
 
@@ -30,6 +31,7 @@ type config struct {
 }
 
 var GlobalCache *pokeCache.Cache
+var PokeDex map[string]pokeAPIHandler.Pokemon
 
 func main() {
 	//Open the config file
@@ -60,7 +62,9 @@ func main() {
 		previous:  "",
 	}
 
-	//startUrl := cnfLinks.ConfLinks[0].URL + cnfLinks.ConfLinks[1].URL
+	//create the cache
 	GlobalCache = pokeCache.NewCache(5 * time.Second)
+	//initialize PokeDex
+	PokeDex = make(map[string]pokeAPIHandler.Pokemon)
 	startRepl(conf)
 }
