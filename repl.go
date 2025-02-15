@@ -85,19 +85,24 @@ func getSupportedCommands() map[string]cliCommand {
 				callback:    commandClear,
 			},
 			"explore": {
-				name:        "explore",
+				name:        "explore <location_name>",
 				description: "Explore the location",
 				callback:    commandExplore,
 			},
 			"catch": {
-				name:        "catch",
+				name:        "catch <pokemon_name>",
 				description: "Try to catch a pokemon",
 				callback:    commandCatch,
 			},
 			"inspect": {
-				name:        "inspect",
+				name:        "inspect <pokemon_name>",
 				description: "Get the pokemon info",
 				callback:    commandInspect,
+			},
+			"pokedex": {
+				name:        "Chech the list of caught pokemon",
+				description: "Get the pokemon info",
+				callback:    commandPokedex,
 			},
 		}
 	return supportedCommands

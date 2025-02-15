@@ -31,7 +31,13 @@ func commandCatch(conf *config, args ...string) error {
 		return nil
 	}
 
+	//When a pokemon is caught, add it to Pokedex
 	fmt.Printf("%v was caught!\n", pokemon.Name)
+	_, ok := conf.PokeDex[pokemon.Name]
+	if !ok {
+		fmt.Println("You may now inspect it with the inspect command.")
+	}
 	conf.PokeDex[pokemon.Name] = pokemon
+
 	return nil
 }
