@@ -6,7 +6,7 @@ import (
 	"github.com/lighthoof/pokedexcli/internal/pokeAPIHandler"
 )
 
-func commandMapf(conf *config, input string) error {
+func commandMapf(conf *config, args ...string) error {
 	res, err := pokeAPIHandler.GetPokeAPILocation(conf.next, GlobalCache)
 	if err != nil {
 		fmt.Println(err)
@@ -22,7 +22,7 @@ func commandMapf(conf *config, input string) error {
 	return nil
 }
 
-func commandMapb(conf *config, input string) error {
+func commandMapb(conf *config, input ...string) error {
 
 	if conf.previous == "" {
 		fmt.Println("you're on the first page")

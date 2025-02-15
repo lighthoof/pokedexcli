@@ -9,12 +9,13 @@ import (
 	"github.com/lighthoof/pokedexcli/internal/pokeAPIHandler"
 )
 
-func commandCatch(conf *config, input string) error {
-	if len(input) != 1 {
+func commandCatch(conf *config, args ...string) error {
+	if len(args) != 1 {
 		return errors.New("you must provide a pokemon name")
 	}
-
-	catchURL := conf.base + conf.pokemon + "/" + input + "/"
+	//Appending input pokemon name to the API link
+	name := args[0]
+	catchURL := conf.base + conf.pokemon + "/" + name + "/"
 	pokemon, err := pokeAPIHandler.GetPokeAPIPokemon(catchURL, GlobalCache)
 	if err != nil {
 		return err
@@ -26,11 +27,11 @@ func commandCatch(conf *config, input string) error {
 
 	//Deciding if a pokemon is caught
 	if rand.Intn(200) > pokemon.BaseExperience {
-		fmt.Printf("%v was caught!\n", pokemon.Name)
-		conf.PokeDex[pokemon.Name] = pokemon
-	} else {
 		fmt.Printf("%v escaped!\n", pokemon.Name)
+		return nil
 	}
 
+	fmt.Printf("%v was caught!\n", pokemon.Name)
+	conf.PokeDex[pokemon.Name] = pokemon
 	return nil
 }

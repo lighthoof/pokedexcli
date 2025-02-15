@@ -23,9 +23,9 @@ func startRepl(conf config) {
 
 		//clear the input
 		inputString := cleanInput(scanner.Text())
-		inputParameter := ""
+		inputParameter := []string{}
 		if len(inputString) > 1 {
-			inputParameter = inputString[1]
+			inputParameter = inputString[1:]
 		}
 		commandInput := inputString[0]
 
@@ -33,7 +33,7 @@ func startRepl(conf config) {
 		supportedCommands := getSupportedCommands()
 		command, ok := supportedCommands[commandInput]
 		if ok {
-			err := command.callback(&conf, inputParameter)
+			err := command.callback(&conf, inputParameter...)
 			if err != nil {
 				fmt.Printf("Error executing a command: %v\n", err)
 			}
@@ -47,7 +47,7 @@ func startRepl(conf config) {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config, string) error
+	callback    func(*config, ...string) error
 }
 
 func cleanInput(text string) []string {
@@ -88,10 +88,16 @@ func getSupportedCommands() map[string]cliCommand {
 				name:        "explore",
 				description: "Explore the location",
 				callback:    commandExplore,
-			}, "catch": {
-				name:        "explore",
+			},
+			"catch": {
+				name:        "catch",
 				description: "Try to catch a pokemon",
 				callback:    commandCatch,
+			},
+			"inspect": {
+				name:        "inspect",
+				description: "Get the pokemon info",
+				callback:    commandInspect,
 			},
 		}
 	return supportedCommands
